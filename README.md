@@ -1,3 +1,3 @@
-# 0MQ Examples
+# ØMQ Examples
 
-Learning 0MQ through "The Guide"
+Learning ØMQ through "The Guide"
