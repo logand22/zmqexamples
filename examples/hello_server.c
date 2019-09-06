@@ -39,6 +39,8 @@ int main(void) {
         printf("Sent: %s\n", response);
         free(message);
     }
+    
+
 
     return 0;
 }

@@ -3,6 +3,10 @@
 
 #include <zmq.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define randof(num) (int) ((float) (num) * random () / (RAND_MAX + 1.0))
 
 static char* s_recv(void* socket) {
     char buff[256];
