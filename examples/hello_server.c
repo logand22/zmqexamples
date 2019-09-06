@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
-//#include "zhelpers.h"
+#include "zhelpers.h"
 
 int main(void) {
     // Create Server
@@ -19,26 +19,25 @@ int main(void) {
         char buff[256];
 
         // Receive Request
-        int received = zmq_recv(responder, buff, 255, 0);
-        if(received == -1) {
+        char* message = s_recv(responder);
+        if(message == NULL) {
             printf("Something up with receiving\n");
             return -1;
         }
-        buff[received] = '\0';
-
-        printf("Received: %s\n", buff);
+        printf("Received: %s\n", message);
 
         // "Do some work"
         sleep(1);
 
         // Send Response
-        int sent = zmq_send(responder, response, strlen(response), 0);
+        int sent = s_send(responder, response);
         if(sent == -1) {
             printf("Something up with shipping\n");
             return -1;
         }
 
         printf("Sent: %s\n", response);
+        free(message);
     }
 
     return 0;

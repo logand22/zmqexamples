@@ -2,8 +2,9 @@
 #include <zmq.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-//#include "zhelpers.h"
+#include "zhelpers.h"
 
 int main(void) {
     // Create Connection
@@ -17,10 +18,8 @@ int main(void) {
     // Send 10 messages
     int request_nbr;
     for (request_nbr = 0; request_nbr != 10; request_nbr++) {
-        char buff[256];
-        
         // Send message wait for response
-        int sent = zmq_send(requester, message, strlen(message), 0);
+        int sent = s_send(requester, message);
         if(sent == -1) {
             printf("F IN CHAT\n");
             return -1;
@@ -29,14 +28,14 @@ int main(void) {
         printf("Sent: %s\n", message);
 
         // Receive Message and print
-        int returned = zmq_recv(requester, buff, 255, 0);
-        if(returned == -1) {
+        char* received = s_recv(requester);
+        if(received == NULL) {
             printf("FAIELD\n");
             return -1;
         }
-        buff[returned] = '\0';
 
-        printf("Received: %s\n", buff);
+        printf("Received: %s\n", received);
+        free(received);
     }
     return 0;
 }
